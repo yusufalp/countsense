@@ -11,8 +11,7 @@ interface BudgetCardProps {
 }
 
 export function BudgetCard({ budget, className = '' }: BudgetCardProps) {
-  const difference = budget.totalIncome - budget.totalExpenses
-  const isPositive = difference >= 0
+  const isPositive = budget.difference >= 0
 
   return (
     <div
@@ -37,7 +36,7 @@ export function BudgetCard({ budget, className = '' }: BudgetCardProps) {
             `}
         >
           {isPositive ? '+' : ''}
-          {formatCurrency(difference)}
+          {formatCurrency(budget.difference)}
         </span>
       </div>
 

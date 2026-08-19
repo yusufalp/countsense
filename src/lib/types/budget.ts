@@ -4,6 +4,7 @@ export interface Budget {
   name: string
   totalIncome: number
   totalExpenses: number
+  difference: number
   savings?: number
   investments?: number
   currency?: string
