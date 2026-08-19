@@ -1,19 +1,16 @@
-import type { Budget } from '#/lib/types'
-import { formatCurrency } from '#/lib/utils/formatCurrency'
+import { Link } from '@tanstack/react-router'
 
 import { Button } from './ui/button'
 
+import { formatCurrency } from '#/lib/utils/formatCurrency'
+import type { Budget } from '#/lib/types/budget'
+
 interface BudgetCardProps {
   budget: Budget
-  onSelect?: (budgetId: string) => void
   className?: string
 }
 
-export function BudgetCard({
-  budget,
-  onSelect,
-  className = '',
-}: BudgetCardProps) {
+export function BudgetCard({ budget, className = '' }: BudgetCardProps) {
   const difference = budget.totalIncome - budget.totalExpenses
   const isPositive = difference >= 0
 
@@ -23,9 +20,10 @@ export function BudgetCard({
     >
       <div className="flex items-center justify-between">
         <p className="text-lg font-semibold">{budget.name}</p>
-        <Button size="sm" onClick={() => onSelect?.(budget.id)}>
-          Edit
-        </Button>
+
+        <Link to="/budget/$budgetId" params={{ budgetId: budget.id }}>
+          <Button size="sm">Edit</Button>
+        </Link>
       </div>
 
       <div className="mb-4">
