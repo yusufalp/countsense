@@ -10,43 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as EditRouteImport } from './routes/edit'
+import { Route as BudgetBudgetIdRouteImport } from './routes/budget/$budgetId'
+import { Route as BudgetNewRouteImport } from './routes/budget/new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EditRoute = EditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
+const BudgetBudgetIdRoute = BudgetBudgetIdRouteImport.update({
+  id: '/budget/$budgetId',
+  path: '/budget/$budgetId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BudgetNewRoute = BudgetNewRouteImport.update({
+  id: '/budget/new',
+  path: '/budget/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/edit': typeof EditRoute
+  '/budget/$budgetId': typeof BudgetBudgetIdRoute
+  '/budget/new': typeof BudgetNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/edit': typeof EditRoute
+  '/budget/$budgetId': typeof BudgetBudgetIdRoute
+  '/budget/new': typeof BudgetNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/edit': typeof EditRoute
+  '/budget/$budgetId': typeof BudgetBudgetIdRoute
+  '/budget/new': typeof BudgetNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/edit'
+  fullPaths: '/' | '/budget/$budgetId' | '/budget/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/edit'
-  id: '__root__' | '/' | '/edit'
+  to: '/' | '/budget/$budgetId' | '/budget/new'
+  id: '__root__' | '/' | '/budget/$budgetId' | '/budget/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EditRoute: typeof EditRoute
+  BudgetBudgetIdRoute: typeof BudgetBudgetIdRoute
+  BudgetNewRoute: typeof BudgetNewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +68,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/edit': {
-      id: '/edit'
-      path: '/edit'
-      fullPath: '/edit'
-      preLoaderRoute: typeof EditRouteImport
+    '/budget/$budgetId': {
+      id: '/budget/$budgetId'
+      path: '/budget/$budgetId'
+      fullPath: '/budget/$budgetId'
+      preLoaderRoute: typeof BudgetBudgetIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/budget/new': {
+      id: '/budget/new'
+      path: '/budget/new'
+      fullPath: '/budget/new'
+      preLoaderRoute: typeof BudgetNewRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EditRoute: EditRoute,
+  BudgetBudgetIdRoute: BudgetBudgetIdRoute,
+  BudgetNewRoute: BudgetNewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
