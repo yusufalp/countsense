@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { CircleX } from 'lucide-react'
 
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 import { Button } from '#/components/ui/button'
+import { formatCurrency } from '#/lib/utils/formatCurrency'
 
 export const Route = createFileRoute('/budget/new')({
   component: RouteComponent,
@@ -32,6 +33,24 @@ function RouteComponent() {
   const [transactions, setTransactions] = useState<DraftTransaction[]>([
     createEmptyTransaction(),
   ])
+
+  const { totalIncome, totalExpenses, difference } = useMemo(() => {
+    let income = 0
+    let expenses = 0
+
+    for (const t of transactions) {
+      const amount = Number(t.amount)
+      if (!amount || amount <= 0) continue
+
+      t.type === 'income' ? (income += amount) : (expenses += amount)
+    }
+
+    return {
+      totalIncome: income,
+      totalExpenses: expenses,
+      difference: income - expenses,
+    }
+  }, [transactions])
 
   const addTransaction = () => {
     setTransactions((prev) => [...prev, createEmptyTransaction()])
@@ -70,18 +89,11 @@ function RouteComponent() {
       return
     }
 
-    const totalIncome = validTransactions
-      .filter((t) => t.type === 'income')
-      .reduce((sum, t) => sum + Number(t.amount), 0)
-
-    const totalExpenses = validTransactions
-      .filter((t) => t.type === 'expense')
-      .reduce((sum, t) => sum + Number(t.amount), 0)
-
     console.log({
       name: budgetName,
       totalIncome,
       totalExpenses,
+      difference,
       transactions: validTransactions,
     })
 
@@ -106,6 +118,31 @@ function RouteComponent() {
           placeholder="e.g. August 2026"
           required
         />
+      </div>
+
+      <div className="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg text-center">
+        <div>
+          <p className="text-sm text-gray-500">Income</p>
+          <p className="text-lg font-semibold text-green-600">
+            {formatCurrency(totalIncome)}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Expenses</p>
+          <p className="text-lg font-semibold text-red-600">
+            {formatCurrency(totalExpenses)}
+          </p>
+        </div>
+        <div>
+          <p className="text-sm text-gray-500">Difference</p>
+          <p
+            className={`text-lg font-semibold ${
+              difference >= 0 ? 'text-green-600' : 'text-red-600'
+            }`}
+          >
+            {formatCurrency(difference)}
+          </p>
+        </div>
       </div>
 
       <div className="space-y-4">
