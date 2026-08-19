@@ -2,15 +2,13 @@ type Frequency = 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
 
 interface RecurrenceRule {
   frequency: Frequency
-  endDate?: Date
-  dayOfMonth?: number
-  dayOfWeek?: number
 }
 
 interface TransactionBase {
   id: string
-  amount: number // always positive
+  budgetId: string
   name: string
+  amount: number // always positive
   date?: Date
   source?: string
   isRecurring?: boolean
@@ -30,17 +28,3 @@ interface Expense extends TransactionBase {
 }
 
 export type Transaction = Income | Expense
-
-export interface Budget {
-  id: string
-  userId: string
-  name: string
-  totalIncome: number
-  totalExpenses: number
-  savings?: number
-  investments?: number
-  currency?: string
-  notes?: string
-  createdAt?: Date
-  updatedAt?: Date
-}
