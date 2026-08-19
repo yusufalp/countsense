@@ -1,18 +1,14 @@
-type Frequency = 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'yearly'
-
-interface RecurrenceRule {
-  frequency: Frequency
-}
+import type { Frequency } from './frequency'
 
 interface TransactionBase {
   id: string
   budgetId: string
   name: string
   amount: number // always positive
+  recurrence: Frequency
   date?: Date
   source?: string
   isRecurring?: boolean
-  recurrence?: RecurrenceRule
   categoryId?: string
   notes?: string
   createdAt?: Date
