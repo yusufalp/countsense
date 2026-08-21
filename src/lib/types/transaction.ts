@@ -15,11 +15,11 @@ interface TransactionBase {
   updatedAt?: Date
 }
 
-interface Income extends TransactionBase {
+export interface Income extends TransactionBase {
   type: 'income'
 }
 
-interface Expense extends TransactionBase {
+export interface Expense extends TransactionBase {
   type: 'expense'
 }
 
