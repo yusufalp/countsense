@@ -53,22 +53,6 @@ export function BudgetCard({ budget, className = '' }: BudgetCardProps) {
             -{formatCurrency(budget.totalExpenses)}
           </p>
         </div>
-        <div>
-          <p className="text-gray-500">Savings</p>
-          <p className="font-medium">
-            {budget.savings
-              ? formatCurrency(budget.savings)
-              : 'You have not set savings.'}
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-500">Investments</p>
-          <p className="font-medium">
-            {budget.investments
-              ? formatCurrency(budget.investments)
-              : 'You have not set investments.'}
-          </p>
-        </div>
       </div>
     </div>
   )

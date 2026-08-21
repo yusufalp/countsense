@@ -7,8 +7,6 @@ const julyBudget: Budget = {
   totalIncome: 5200,
   totalExpenses: 3850,
   difference: 1350,
-  savings: 800,
-  investments: 400,
   currency: 'USD',
 }
 
@@ -19,8 +17,6 @@ const augustBudget: Budget = {
   totalIncome: 5200,
   totalExpenses: 5850,
   difference: -600,
-  savings: 0,
-  investments: 400,
   currency: 'USD',
 }
 
